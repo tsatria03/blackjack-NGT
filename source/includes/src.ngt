@@ -1,0 +1,12 @@
+void play_s_wait(string filename,sound@ f=s)
+{
+if(f.is_active()) f.close();
+f.load(filename);
+if(!f.is_active()) return;
+f.play();
+while(f.is_playing())
+{
+update_game_window();
+}
+f.close();
+}

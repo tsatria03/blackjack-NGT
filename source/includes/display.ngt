@@ -1,0 +1,230 @@
+void play_stand(string st)
+{
+if(st==awin)
+{
+play_s_wait(sp+"/win.ogg",s);
+if(bet>0)
+{
+dollars+=bet;
+speak("you've won "+bet+" dollars.");
+wait(750);
+}
+}
+else if(st=="draw!")
+{
+play_s_wait(sp+"/bust.ogg",s);
+}
+else if(st==bwin)
+{
+play_s_wait(sp+"/lose.ogg",s);
+if(bet>0)
+{
+speak("you've lost "+bet+" dollars!");
+play_s_wait(sp+"/lost_money.ogg",s);
+}
+}
+else
+{
+play_s_wait(sp+"/push.ogg",s);
+}
+s.load(sp+"/finished.ogg");
+string mms=get_stand()+"\r\nyour total cards: "+pcl.length()+", making "+get_ptcn()+".\r\ncomputer's total cards: "+dcl.length()+", making "+get_dtcn()+".";
+speak("finished. "+mms);
+s.play();
+}
+void display()
+{
+refresh();
+double counter=0;
+string[] items;
+speak("game started. press f1 for help.");
+while(true)
+{
+update_game_window();
+update_general_kb();
+items.resize(0);
+if(!running)
+{
+items.insert_last("new button");
+items.insert_last("change bet button");
+}
+items.insert_last("you have "+dollars+" dollars");
+items.insert_last("bet, "+bet+" dollars.");
+if(stand) items.insert_last(get_stand());
+if(running)
+{
+items.insert_last("hit button");
+items.insert_last("stand button");
+}
+if(m==t_p)
+{
+if(pcl.length()>0)
+{
+for(uint p=0;p<pcl.length();p++)
+{
+items.insert_last(""+pcl[p]);
+}
+items.insert_last("total card: "+pcl.length());
+items.insert_last("total numbers: "+get_ptcn());
+}
+}
+if(m==t_d)
+{
+if(dcl.length()>0)
+{
+if(!stand) items.insert_last(""+dcl[0]);
+else
+{
+for(uint p=0;p<dcl.length();p++)
+{
+items.insert_last(""+dcl[p]);
+}
+}
+if(stand)
+{
+items.insert_last("total card: "+dcl.length());
+items.insert_last("total numbers: "+get_dtcn());
+}
+}
+}
+if(counter<0) counter=0;
+if(counter>=items.length()) counter=items.length()-1;
+if(key_repeat(SDLK_UP))
+{
+if(counter>0) counter--;
+speak(""+items[counter]);
+}
+if(key_repeat(SDLK_DOWN))
+{
+if(counter<items.length()-1) counter++;
+speak(""+items[counter]);
+}
+if(key_repeat(SDLK_TAB))
+{
+if(sd())
+{
+m--;
+if(m<0) m=modes.length()-1;
+}
+else
+{
+m++;
+if(m>modes.length()-1) m=0;
+}
+speak(get_mode(m));
+}
+if(key_pressed(SDLK_ESCAPE))
+{
+break;
+}
+if(get_ptcn()>21 && !stand)
+{
+standgame();
+}
+if(key_pressed(SDLK_n))
+{
+newgame();
+}
+if(key_pressed(SDLK_h) && !stand && running)
+{
+hitgame();
+}
+if(key_pressed(SDLK_c))
+{
+display_your_card_information();
+}
+if(key_pressed(SDLK_s)  && !stand && running)
+{
+standgame();
+}
+if(key_pressed(SDLK_RETURN))
+{
+string rs=""+items[counter];
+if(rs=="new button")
+{
+newgame();
+}
+else if(rs=="hit button")
+{
+hitgame();
+}
+else if(rs=="stand button")
+{
+standgame();
+}
+else if(rs=="change bet button")
+{
+changebet();
+}
+}//return(SDLK)
+if(get_ptcn()==21 && !stand && running)
+{
+speak("good, you have a blackjack!");
+wait(750);
+double bt=bet;
+bet=bet+bet;
+standgame();
+bet=bt;
+}
+}//while
+quit();
+}//end
+void newgame()
+{
+refresh();
+speak("new game started");
+running=true;
+play_s_wait(sp+"/shuffle.ogg",s);
+speak("your cards");
+double ha=hit();
+play_s_wait(sp+"/draw.ogg",s);
+speak(""+ha);
+
+ha=hit();
+play_s_wait(sp+"/draw.ogg",s);
+speak(""+ha);
+dhit();dhit();
+}
+void hitgame()
+{
+double h=hit();
+speak("hits "+h);
+play_s_wait(sp+"/draw.ogg",s);
+}
+void standgame()
+{
+for(uint ia=0;ia<listl;ia++)
+{
+try_dhit();
+}
+stand=true;
+running=false;
+speak("standed!");
+play_s_wait(sp+"/stand.ogg",s);
+play_stand(get_stand());
+}
+void display_your_card_information()
+{
+if(pcl.length()<1)
+{
+speak("no cards");
+return;
+}
+string ms=listing.convert(pcl)+"; making "+get_ptcn()+".\r\n";
+ms+="total cards, "+pcl.length();
+speak(ms);
+}
+void changebet()
+{
+string f=input.input("type the amount to bet");
+if(f=="") return;
+double bdd=parseInt(f);
+if(bdd>dollars)
+{
+speak("error. you cannot bet more than what you already have, maximum of "+dollars+" dollars.");
+return;
+}
+bet=bdd;
+speak("changed bet success!");
+play_s_wait(sp+"/bet_changed.ogg",s);
+}

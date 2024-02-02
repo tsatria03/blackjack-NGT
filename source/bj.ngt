@@ -1,0 +1,160 @@
+/*
+blackjack.
+by harry min khant
+(
+https://harry.free.nf
+)
+this game has been developed with ngt kit, which is an audiogame engine.
+*/
+string ver="1.0.2";
+string hmsg="use up and down arrow keys to navigate and press enter to activate one. alternitively, check out keyboards by pressing the f2";
+string gsc="f1 : shows help message.\r\nf2 : show keyboard shortcuts. you've probably already used this.\r\nn : new game.\r\nh : hit.\r\ns : stand.\r\nc : shows informationabout your cards";
+string sp="snd";
+//game modes
+enum gametabs
+{
+t_p=1,
+t_d
+}
+int[] modes={0,1,2};
+int[] list={1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10};
+uint listl=0;
+int m=1; //the game mode.
+int[] dcl; //computer cards
+int[] pcl; //yours
+bool running=false;
+bool stand=false;
+timer at,bt;
+string awin="you win the game!";
+string bwin="computer wins the game!";
+sound s;
+#include"i"
+lister listing;
+instance multiple("blackjackharry");
+double dollars=2000,bet=1;
+text_input input;
+void refresh()
+{
+//this function refreshes the data, resizing whatever value to default.
+pcl.resize(0);
+dcl.resize(0);
+running=false;
+stand=false;
+at.restart();bt.restart();
+new_list();
+}
+void main()
+{
+if(multiple.is_running())
+{
+alert("error","can't open as an instance is already running!");
+quit();
+return;
+}
+show_game_window("blackjack version "+ver);
+display();
+}
+double get_dtcn()
+{
+double n=0;
+for(uint i=0;i<dcl.length();i++)
+{
+n+=dcl[i];
+}
+return n;
+}
+double get_ptcn()
+{
+double n=0;
+for(uint i=0;i<pcl.length();i++)
+{
+n+=pcl[i];
+}
+return n;
+}
+
+double hit()
+{
+if(!running) return -1;
+if(list.length()<1) return -1;
+uint ra=random(0,list.length()-1);
+uint r=list[ra];
+pcl.insert_last(r);
+list.remove_at(ra);
+return r;
+}
+double dhit()
+{
+if(!running) return -1;
+if(stand) return -1;
+if(list.length()<1) return -1;
+uint ra=random(0,list.length()-1);
+uint r=list[ra];
+dcl.insert_last(r);
+list.remove_at(ra);
+return r;
+}
+void try_dhit()
+{
+if(!running) return;
+if(at.elapsed_millis()<500) return;
+double dt=get_dtcn();
+int ab=random(1 , 50);
+if(dt>=20) return;
+if(stand) return;
+if(dt<16)
+{
+dhit();
+return;
+}
+else if(ab==1 || ab==18 || ab==28)
+{
+if(dt>=21) return;
+if(stand) return;
+double hd=dhit();
+return;
+}
+return;
+}
+
+string get_stand()
+{
+if(!stand) return "";
+double a=get_dtcn();
+double b=get_ptcn();
+if(a>21 && b>21) return"no one wins the game!";
+else if(a==b) return"draw!";
+else if(a<b)
+{
+if(b>21) return bwin;
+else if(a>21) return awin;
+return awin;
+}
+else if(a>b)
+{
+if(a>21) return awin;
+else if(b>21) return bwin;
+return bwin;
+}
+return "draw!";
+}
+string get_mode(int ma)
+{
+if(ma==t_p) return"player";
+if(ma==t_d) return"computer";
+return"default";
+}
+bool sd()
+{
+return key_down(SDLK_LSHIFT) or key_down(SDLK_RSHIFT);
+}
+void new_list()
+{
+list.resize(0);
+int[] l={1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10};
+for(uint i=0;i<l.length();i++)
+{
+list.insert_last(l[i]);
+}
+listl=list.length();
+}

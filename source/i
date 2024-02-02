@@ -1,0 +1,5 @@
+#include"includes/display.ngt"
+#include"includes/keyboard.ngt"
+#include"includes/hip.ngt"
+#include"includes/text_input.ngt"
+#include"includes/src.ngt"

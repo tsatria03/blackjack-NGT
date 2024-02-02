@@ -1,0 +1,15 @@
+terms used: 
+harry min khant, harry - refers to the creater of the content.
+content - the content belongs to harry min khant, including softwares, files, and libraries.
+
+This license applies to all files associated with harry min khant. By accessing or using any of these files, you agree to be bound by the terms and conditions of this license. If you do not agree with these terms and conditions, you must destroy any copies of the files in your possession and refrain from using the files in any way.
+1. License Grant. harry min khant grants you a personal, non-exclusive, non-transferable, revocable license to use the files for your own personal or internal business use.
+2. Restrictions. You may not modify, reverse engineer, or create derivative works based on the files. You may not distribute, sell, or transfer the files to any third party without the prior written consent of harry min khant.
+3. Intellectual Property. You acknowledge that the files are the property of harry min khant and are protected by copyright and other intellectual property laws. You may not use the files in any way that infringes the intellectual property rights of harry min khant or any third party.
+4. Termination. This license is effective until terminated. harry min khant may terminate this license at any time for any reason, in which case you must destroy all copies of the files in your possession.
+5. Disclaimer of Warranties. The files are provided "as is" without any warranties of any kind. harry min khant specifically disclaims any implied warranties of merchantability, fitness for a particular purpose, and non-infringement.
+6. Limitation of Liability. harry min khant will not be liable for any damages arising out of or in connection with your use of the files, whether such damages are direct, indirect, incidental, consequential, or punitive.
+7. Governing Law. This license shall be governed by and construed in accordance with the laws of the state of [state], without giving effect to any principles of conflict of laws.
+8. Entire Agreement. This license constitutes the entire agreement between you and harry min khant with respect to the use of the files, and supersedes any prior agreements or understandings, whether written or oral.
+9. Waiver. No waiver of any term of this license shall be deemed a further or continuing waiver of such term or any other term.
+10. Severability. If any provision of this license is found to be invalid or unenforceable, that provision shall be enforced to the maximum extent possible, and the remaining provisions shall remain in full force and effect.
