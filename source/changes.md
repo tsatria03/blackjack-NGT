@@ -2,7 +2,18 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
-## new in version 1.0.2
+## new:
+
+### fixes
+* fixed the bug where dollars wouldn't be removed upon losing.
+* added
+```
+delay(5);
+```
+function to reduce CPU and fan usage.
+
+
+## new in version 1.0.2:
 
 ### fixes
 * Fixed the bug of the f1 key saying "active one" instead of "activate one".
@@ -18,7 +29,7 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * Upon the stand, it will now speak not only finish message, but also the winning message. As such, the total cards, total numbers will also be announced upon stand.
 * You can now see your all cards information by pressing the *c* key.
 
-## new in version 1.0.1 (build 2024.01.01)
+## new in version 1.0.1 (build 2024.01.01):
 
 ### updated
 * Updated the computer sequence function to determine the hit of the card, to make it more randomized.
@@ -29,6 +40,6 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * Fixed a bug in the installer version displaying "readme" as "breadme". Please delete the *breadme* start menu shortcut!
 * Fixed a bug that waits too longer than it should be in the stand.
 
-## new in version 1.0.0
+## new in version 1.0.0:
 
 *First release*

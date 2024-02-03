@@ -19,6 +19,7 @@ else if(st==bwin)
 play_s_wait(sp+"/lose.ogg",s);
 if(bet>0)
 {
+dollars-=bet;
 speak("you've lost "+bet+" dollars!");
 play_s_wait(sp+"/lost_money.ogg",s);
 }
@@ -40,6 +41,7 @@ string[] items;
 speak("game started. press f1 for help.");
 while(true)
 {
+delay(5);
 update_game_window();
 update_general_kb();
 items.resize(0);

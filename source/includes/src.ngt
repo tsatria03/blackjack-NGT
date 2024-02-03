@@ -6,6 +6,7 @@ if(!f.is_active()) return;
 f.play();
 while(f.is_playing())
 {
+delay(5);
 update_game_window();
 }
 f.close();
