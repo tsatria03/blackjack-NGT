@@ -1,3 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 *.ngt linguist-language=angelScript
+*.md linguist-language=markdown
+*.html linguist-language=HTML
+*.txt linguist-language=Text
