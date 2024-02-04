@@ -402,3 +402,86 @@ int bool_to_int(bool b)
 {
 return b?1:0;
 }
+string ms_to_readable_time(double ms)
+{
+if(ms<=0) return "no time at all";
+if(ms<1000) return ms+" millisecond"+(ms>1?"s":"");
+double days, hours, minutes,weeks,months,seconds,years;
+seconds=floor(ms/1000);
+minutes = floor(seconds / 60);
+seconds %= floor(60);
+hours = floor(minutes / 60);
+minutes %= floor(60);
+days = floor(hours / 24);
+hours %= floor(24);
+days=round(days,0);
+weeks = floor(days / 7);
+days %= floor(7);
+months = floor(weeks / 4.35);
+weeks %= floor(4.35);
+years=floor(months/12);
+months%=floor(12);
+months=round(months,0);
+weeks=round(weeks,0);
+minutes=round(minutes,0);
+hours=round(hours,0);
+seconds=round(seconds,0);
+years=round(years,0);
+string ret;
+if(years>0)
+{
+string y=years>1 ? "years" : "year";
+ret+=years+" "+y+", ";
+}
+if(months>0)
+{
+string m=months>1 ? "months" : "month";
+ret+=months+" "+m+", ";
+}
+if(weeks>0)
+{
+string w=weeks>1 ? "weeks" : "week";
+ret+=weeks+" "+w+", ";
+}
+if(days>0)
+{
+string d=days>1 ? "days" : "day";
+ret+=days+" "+d;
+}
+if(days>0&&(hours>0||minutes>0||seconds>0))
+ret+=", ";
+if(hours>0)
+{
+string h=hours>1 ? "hours" : "hour";
+ret+=hours+" "+h;
+}
+if(hours>0&&(minutes>0||seconds>0))
+ret+=", ";
+if(minutes>0)
+{
+string m=minutes>1 ? "minutes" : "minute";
+ret+=minutes+" "+m;
+}
+if(minutes>0&&seconds>0)
+ret+=", ";
+if(seconds>0)
+{
+string s=seconds>1 ? "seconds" : "second";
+ret+=seconds+" "+s;
+}
+string[] ret2=ret.split(", ");
+if(ret2.length()==1) return ret2[0];
+if(ret2.length()>1)
+{
+ret="";
+for(uint i=0;i<ret2.length();i++)
+{
+string h=ret2[i];
+if(i>=ret2.length()-1) ret+="and ";
+ret+=h;
+if(i<ret2.length()-2) ret+=", ";
+else if(i<ret2.length()-1) ret+=" ";
+}
+}//length
+return ret;
+}

@@ -222,6 +222,7 @@ cursor=entry.length();
 }
 while(true)
 {
+delay(5);
 update_game_window();
 string c=get_input();
 if(c!="" and c.length()==1){ 
@@ -318,11 +319,7 @@ if(key_pressed(SDLK_UP) or key_pressed(SDLK_DOWN))
 {
 string fulltext;
 for(uint i=0; i<entry.length(); i++) fulltext+=""+entry[i];
-if(fulltext.length()==0)
-{
-speak("blank");
-continue;
-}
+if(fulltext.length()==0) continue;
 speak(fulltext,true);
 }
 if(rarrow.pressing() and cursor<entry.length())

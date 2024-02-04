@@ -2,16 +2,15 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
-## new:
+## new in version 1.0.3:
 
 ### fixes
 * fixed the bug where dollars wouldn't be removed upon losing.
-* added
-```
-delay(5);
-```
-function to reduce CPU and fan usage.
 
+### features and extras
+* added *delay(5);* function to reduce CPU and fan usage.
+* updated text_input to latest, optimizing CPU and fan usage at the maximum possibility.
+* updated the build engine to version 2.09. do to this, all dll files have been updated, copied from the original engine file.
 
 ## new in version 1.0.2:
 
