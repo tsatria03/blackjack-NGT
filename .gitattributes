@@ -4,3 +4,4 @@
 *.md linguist-language=markdown
 *.html linguist-language=HTML
 *.txt linguist-language=Text
+*.lng linguist-language=Text
