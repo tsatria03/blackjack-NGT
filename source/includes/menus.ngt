@@ -1,0 +1,68 @@
+void mainmenu()
+{
+custom_menu c;
+c.add(tran("play game"),"play");
+c.add(tran("exit the game"),"quit");
+c.create("main menu");
+c.focus(-1);
+while(c.is_running())
+{
+delay(5);
+update_game_window();
+c.monitor();
+string r=c.get_click();
+if(r=="play")
+{
+speak(tran("loading..."));
+c.reset(true);
+display();
+break;
+}
+else if(r=="quit")
+{
+speak(tran("exiting..."));
+c.reset(true);
+wait(1000);
+exit();
+}
+}
+}//end.mainmenu
+void asklang(bool escapeable=true)
+{
+filesystem f;
+string cp=f.get_current_path();
+f.change_current_path(cp+"/"+tr.lfolder);
+string[] files=f.get_files();
+string[] l={"english"};
+if(files.length()>0)
+{
+for(uint a=0;a<files.length();a++)
+{
+l.insert_last(files[a].replace(tr.lex,""));
+}
+}
+custom_menu m;
+for(uint i=0;i<l.length();i++)
+{
+m.add(tran(l[i]),l[i]);
+}
+m.escapeable=escapeable;
+m.create(tran("choose your language"));
+f.change_current_path(cp);
+while(m.is_running())
+{
+delay(5);
+m.monitor();
+update_game_window();
+if(m.get_click()!="")
+{
+lang=m.get_click();
+tr.refresh(lang);
+string lflag=tr.get_flag(lang);
+speak(tran("language changed to %1% (%2%)","%1% %2%",lang+"```=```"+lflag));
+break;
+}
+}//while
+wait(750);
+mainmenu();
+}//end

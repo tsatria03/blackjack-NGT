@@ -255,8 +255,8 @@ bool file_put_contents(string filename, string contents, uint8 filemode=FILE_WRI
 {
 int ret;
 file tempfile;
-if(filemode==FILE_WRITE) ret=tempfile.open(filename,"wb");
-else if(filemode==FILE_APPEND) ret=tempfile.open(filename,"ab");
+if(filemode==FILE_WRITE) ret=tempfile.open(filename,"w");
+else if(filemode==FILE_APPEND) ret=tempfile.open(filename,"a");
 else return false;
 if(ret==-1) return false;
 int ret2=tempfile.write_string(contents);
@@ -269,8 +269,8 @@ return true;
 string file_get_contents(string filename)
 {
 file tempfile;
-tempfile.open(filename,"rb");
-string r=tempfile.read_string(0);
+tempfile.open(filename,"r");
+string r=tempfile.read_string(-1);
 tempfile.close();
 return r;
 }
@@ -484,4 +484,48 @@ else if(i<ret2.length()-1) ret+=" ";
 }
 }//length
 return ret;
+}
+/*
+string utilities
+*/
+string stringleft(string str, uint count)
+{
+return str.substr(0,count);
+}
+string stringright(string str, uint count)
+{
+if(count<1) return"";
+return str.substr(str.length()-count);
+}
+string string_trimleft(string str, uint count)
+{
+if(count>str.length()) return str;
+if(count<1) return"";
+return str.substr(count);
+}
+string string_trimright(string str, uint count)
+{
+if(count>str.length()) return str;
+if(count<1) return"";
+count=str.length()-count;
+return str.substr(0,count);
+}
+string var_replace(string text, string[] replacers={}, string opening="%", string closing="%")
+{
+if(replacers.length()<1) return text;
+for(uint b=0;b<replacers.length();b++)
+{
+if(text.contains(opening+""+(b+1)+""+closing)) text=text.replace(opening+""+(b+1)+""+closing,replacers[b]);
+}
+return text;
+}
+string var_replace2(string text, string[] fir={}, string[] sec={})
+{
+if(fir.length()<1) return text;
+if(fir.length()!=sec.length()) return text;
+for(uint b=0;b<fir.length();b++)
+{
+if(text.contains(fir[b])) text=text.replace(fir[b],sec[b]);
+}
+return text;
 }

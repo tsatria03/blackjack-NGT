@@ -1,10 +1,10 @@
 void play_s_wait(string filename,sound@ f=s)
 {
-if(f.is_active()) f.close();
+if(f.active) f.close();
 f.load(filename);
-if(!f.is_active()) return;
+if(!f.active) return;
 f.play();
-while(f.is_playing())
+while(f.playing)
 {
 delay(5);
 update_game_window();

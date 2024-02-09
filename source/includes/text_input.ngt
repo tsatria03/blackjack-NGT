@@ -206,7 +206,7 @@ return true;
 }
 string input(string ttl,string default_text="",bool uses_password=false,string mask_char="",int txtlength=0)
 {
-if(!capital.is_active()) capital.load("cap.ogg");
+if(!capital.active) capital.load("cap.ogg");
 title=ttl;
 passworded=uses_password;
 mask=mask_char;

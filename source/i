@@ -3,3 +3,6 @@
 #include"includes/hip.ngt"
 #include"includes/text_input.ngt"
 #include"includes/src.ngt"
+#include"includes/translator.ngt"
+#include"includes/custom_menu.ngt"
+#include"includes/menus.ngt"
