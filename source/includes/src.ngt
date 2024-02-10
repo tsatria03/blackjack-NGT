@@ -11,3 +11,10 @@ update_game_window();
 }
 f.close();
 }
+void play_s(string filename,sound@ f=s)
+{
+if(f.active) f.close();
+f.load(filename);
+if(!f.active) return;
+f.play();
+}

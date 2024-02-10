@@ -161,6 +161,8 @@ changebet();
 }//return(SDLK)
 if(get_ptcn()==21 && !stand && running)
 {
+sound bj21;
+play_s(sp+"/got21.ogg",bj21);
 speak(tran("good, you have a blackjack!"));
 wait(750);
 double bt=bet;

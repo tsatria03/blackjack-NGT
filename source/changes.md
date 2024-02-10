@@ -2,6 +2,11 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
+## new
+* added `play_s` function into `includes/src.ngt`.
+* added a sound when you get blackjack 21 when hit, thanks to **Tew Hong Jun**
+* added comments in `bj.ngt` to make less confuse with the codes.
+
 ## new in version 1.0.4:
 * added translation into the game! the tran.lng has been provided in the source directory. you can copy it to the lang folder with your language name to translate, as that is just the template. enjoy. you can translate and make PR, or send through telegram. the translated text should be placed after the equal sign (=).
 

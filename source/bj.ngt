@@ -9,22 +9,23 @@ this game has been developed with ngt kit, which is an audiogame engine.
 string ver="1.0.4";
 string hmsg="use up and down arrow keys to navigate and press enter to activate one. alternitively, check out keyboards by pressing the f2";
 string gsc="f1 : shows help message.\r\nf2 : show keyboard shortcuts. you've probably already used this.\r\nn : new game.\r\nh : hit.\r\ns : stand.\r\nc : shows informationabout your cards";
-string sp="snd";
+string sp="snd"; //the sound path
 //game modes
 enum gametabs
 {
 t_p=1,
 t_d
 }
-int[] modes={0,1,2};
-int[] list={1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10};
-uint listl=0;
-int m=1; //the game mode.
+
+int[] modes={0,1,2}; //the list of modes.
+int[] list={1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10}; //this list is used on the cards.
+uint listl=0; //the list length of the total available cards. this should not be modified during the runtime, of course.
+int m=1; //the current game mode.
 int[] dcl; //computer cards
 int[] pcl; //yours
 bool running=false;
 bool stand=false;
-timer at,bt;
+timer at,bt; //these timers are placed in the hits to performence its usage.
 string awin="you win the game!";
 string bwin="computer wins the game!";
 sound s;
@@ -38,12 +39,12 @@ translator tr;
 void refresh()
 {
 //this function refreshes the data, resizing whatever value to default.
-pcl.resize(0);
-dcl.resize(0);
+pcl.resize(0); //player cards
+dcl.resize(0); //computer cards
 running=false;
 stand=false;
-at.restart();bt.restart();
-new_list();
+at.restart();bt.restart(); //resets all timers.
+new_list(); //creates the new list, ready to hit cards.
 }
 void main()
 {
@@ -59,6 +60,7 @@ asklang(false);
 }
 double get_dtcn()
 {
+//this function returns the total number of all the computer cards. this is used to determine the 21.
 double n=0;
 for(uint i=0;i<dcl.length();i++)
 {
@@ -68,6 +70,7 @@ return n;
 }
 double get_ptcn()
 {
+//this function returns the total number of all the player cards. this is used to determine the 21.
 double n=0;
 for(uint i=0;i<pcl.length();i++)
 {
@@ -78,16 +81,18 @@ return n;
 
 double hit()
 {
+//hit card function for player.
 if(!running) return -1;
-if(list.length()<1) return -1;
-uint ra=random(0,list.length()-1);
-uint r=list[ra];
-pcl.insert_last(r);
-list.remove_at(ra);
+if(list.length()<1) return -1; //no cards available to hit.
+uint ra=random(0,list.length()-1); //randomly generate a card from the list.
+uint r=list[ra]; //the variable of the card generated randomly.
+pcl.insert_last(r); //insert to player cards.
+list.remove_at(ra); //this card is no longer available, thus removed.
 return r;
 }
 double dhit()
 {
+//hit function for the computer.
 if(!running) return -1;
 if(stand) return -1;
 if(list.length()<1) return -1;
@@ -99,22 +104,25 @@ return r;
 }
 void try_dhit()
 {
+//since the computer is automatic, this function is used to hit automatically for the computer, declared in display.ngt in the includes folder.
 if(!running) return;
 if(at.elapsed_millis<500) return;
-double dt=get_dtcn();
+double dt=get_dtcn(); //get total number of computer.
 int ab=random(1 , 50);
 if(dt>=20) return;
 if(stand) return;
 if(dt<16)
 {
+//the total number is less than 16, so hit.
 dhit();
 return;
 }
 else if(ab==1 || ab==18 || ab==28)
 {
-if(dt>=21) return;
-if(stand) return;
-double hd=dhit();
+//this was generated from 1 to 50 to determine the automatic hit or not hit.
+if(dt>=21) return; //already reached.
+if(stand) return; //the game is already standed.
+double hd=dhit(); //hitted.
 return;
 }
 return;
@@ -122,11 +130,12 @@ return;
 
 string get_stand()
 {
+//this function returns the string of the stand message.
 if(!stand) return "";
-double a=get_dtcn();
-double b=get_ptcn();
-string aw=tran(awin);
-string bw=tran(bwin);
+double a=get_dtcn(); //computer total number
+double b=get_ptcn(); //player total number
+string aw=tran(awin); //translate awin variable into aw variable.
+string bw=tran(bwin); //the computer win variable.
 if(a>21 && b>21) return tran("no one wins the game!");
 else if(a==b) return tran("draw!");
 else if(a<b)
@@ -151,10 +160,12 @@ return"default";
 }
 bool sd()
 {
+//returns If the shift is down.
 return key_down(SDLK_LSHIFT) or key_down(SDLK_RSHIFT);
 }
 void new_list()
 {
+//creates a refreshed new list, ready to available the cards for hits.
 list.resize(0);
 int[] l={1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10};
 for(uint i=0;i<l.length();i++)
