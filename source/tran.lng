@@ -26,3 +26,4 @@ change bet button=
 type the amount to bet=
 error. you cannot bet more than what you already have, maximum of %1% dollars.=
 changed bet success!=
+sorry, you don't have enough dollars that you are currently bet. you only have %1% dollars

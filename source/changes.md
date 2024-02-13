@@ -3,6 +3,9 @@
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
 ## new
+* added new translation string. `tran.lng` file was also been updated as of it.
+* fixed the bug where you can keep playing the game even If your bet is greater than your dollars.
+* initialized the `input.reset();` function into `changebet` function to insure the previous inputs are properly reset.
 * added `play_s` function into `includes/src.ngt`.
 * added a sound when you get blackjack 21 when hit, thanks to **Tew Hong Jun**
 * added comments in `bj.ngt` to make less confuse with the codes.

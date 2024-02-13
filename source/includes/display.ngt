@@ -175,6 +175,11 @@ exit();
 }//end
 void newgame()
 {
+if(bet>0 && dollars<bet)
+{
+speak(tran("sorry, you don't have enough dollars that you are currently bet. you only have %1% dollars","%1%",""+dollars));
+return;
+}
 refresh();
 speak(tran("new game started"));
 running=true;
@@ -222,6 +227,7 @@ speak(ms);
 }
 void changebet()
 {
+input.reset();
 string f=input.input(tran("type the amount to bet"));
 if(f=="") return;
 double bdd=parseInt(f);
