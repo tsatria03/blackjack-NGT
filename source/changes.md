@@ -2,8 +2,10 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
-## new
-* added new translation string. `tran.lng` file was also been updated as of it.
+## new in version 1.0.5:
+* the game will bring you to the main menu upon pressing escape on the game area, rather than directly executing to quit.
+* added play stat into the main menu. you will see how many times you've played, the number of times you've won, draw, and lost.
+* added new translation strings. `tran.lng` file was also been updated as of it.
 * fixed the bug where you can keep playing the game even If your bet is greater than your dollars.
 * initialized the `input.reset();` function into `changebet` function to insure the previous inputs are properly reset.
 * added `play_s` function into `includes/src.ngt`.

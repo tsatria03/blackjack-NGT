@@ -2,6 +2,7 @@ void play_stand(string st)
 {
 if(st==awin)
 {
+win++;
 play_s_wait(sp+"/win.ogg",s);
 if(bet>0)
 {
@@ -12,10 +13,12 @@ wait(750);
 }
 else if(st=="draw!")
 {
+draw++;
 play_s_wait(sp+"/bust.ogg",s);
 }
 else if(st==bwin)
 {
+lose++;
 play_s_wait(sp+"/lose.ogg",s);
 if(bet>0)
 {
@@ -171,7 +174,7 @@ standgame();
 bet=bt;
 }
 }//while
-exit();
+mainmenu();
 }//end
 void newgame()
 {
@@ -202,6 +205,7 @@ play_s_wait(sp+"/draw.ogg",s);
 }
 void standgame()
 {
+playcount++;
 for(uint ia=0;ia<listl;ia++)
 {
 try_dhit();

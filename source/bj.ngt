@@ -36,6 +36,10 @@ double dollars=2000,bet=1;
 text_input input;
 string lang="english";
 translator tr;
+int playcount=0;
+int win=0;
+int lose=0;
+int draw=0;
 void refresh()
 {
 //this function refreshes the data, resizing whatever value to default.

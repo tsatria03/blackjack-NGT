@@ -2,6 +2,10 @@ void mainmenu()
 {
 custom_menu c;
 c.add(tran("play game"),"play");
+string playstat=""+playcount;
+playstat+="```=```"+win+"```=```"+draw+"```=```"+lose;
+c.add(tran("you've been played %1% times since the last time you ran the game. you've won %2% times, draw %3% times, and lost %4% times","%1% %2% %3% %4%",playstat),"playcount");
+c.set_state("playcount",false);
 c.add(tran("exit the game"),"quit");
 c.create("main menu");
 c.focus(-1);
