@@ -23,7 +23,7 @@ if(this.lfolder!=folder) this.lfolder=folder;
 if(this.lex!=ex) this.lex=ex;
 file f;
 f.open(this.lfolder+"/"+l+""+this.lex+"","r");
-string ldd=f.read_string(-1);
+string ldd=f.read(f.get_size());
 f.close();
 this.langdata=ldd;
 this.langname=l;
@@ -63,7 +63,7 @@ if(this.langname!=l)
 {
 file f;
 f.open(this.lfolder+"/"+l+""+this.lex+"","r");
-lines=f.read_string(-1).split("\r\n");
+lines=f.read(f.get_size()).split("\r\n");
 f.close();
 }
 else

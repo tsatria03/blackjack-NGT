@@ -2,6 +2,11 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
+## new :
+* added new language strings.
+* added an option into the main menu to change to a new language.
+* updated burmese localization.
+
 ## new in version 1.0.5:
 * the game will bring you to the main menu upon pressing escape on the game area, rather than directly executing to quit.
 * added play stat into the main menu. you will see how many times you've played, the number of times you've won, draw, and lost.

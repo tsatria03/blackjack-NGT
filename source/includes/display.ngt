@@ -234,7 +234,7 @@ void changebet()
 input.reset();
 string f=input.input(tran("type the amount to bet"));
 if(f=="") return;
-double bdd=parseInt(f);
+double bdd=string_to_number(f);
 if(bdd>dollars)
 {
 speak(tran("error. you cannot bet more than what you already have, maximum of %1% dollars.","%1%",""+dollars));

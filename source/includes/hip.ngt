@@ -259,7 +259,7 @@ if(filemode==FILE_WRITE) ret=tempfile.open(filename,"w");
 else if(filemode==FILE_APPEND) ret=tempfile.open(filename,"a");
 else return false;
 if(ret==-1) return false;
-int ret2=tempfile.write_string(contents);
+int ret2=tempfile.write(contents);
 tempfile.close();
 if(ret2==-1) ret=-1;
 else ret=0;
@@ -270,7 +270,7 @@ string file_get_contents(string filename)
 {
 file tempfile;
 tempfile.open(filename,"r");
-string r=tempfile.read_string(-1);
+string r=tempfile.read(tempfile.get_size());
 tempfile.close();
 return r;
 }
@@ -528,4 +528,17 @@ for(uint b=0;b<fir.length();b++)
 if(text.contains(fir[b])) text=text.replace(fir[b],sec[b]);
 }
 return text;
+}
+bool inrange(double x, double y, double z, double minx, double maxx, double miny, double maxy, double minz, double maxz)
+{
+if(x>=minx && x<=maxx && y>=miny && y<=maxy && z>=minz && z<=maxz) return true;
+return false;
+}
+bool inrange(double x, double y, double z, vector@ min, vector@ max)
+{
+return inrange(x,y,z,min.x,max.x,min.y,max.y,min.z,max.z);
+}
+bool inrange(vector@ current, vector@ min, vector@ max)
+{
+return inrange(current.x,current.y,current.z,min.x,max.x,min.y,max.y,min.z,max.z);
 }

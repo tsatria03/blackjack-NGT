@@ -6,7 +6,7 @@ https://harrymkt.github.io
 )
 this game has been developed with ngt kit, which is an audiogame engine.
 */
-string ver="1.0.4";
+string ver="1.0.5";
 string hmsg="use up and down arrow keys to navigate and press enter to activate one. alternitively, check out keyboards by pressing the f2";
 string gsc="f1 : shows help message.\r\nf2 : show keyboard shortcuts. you've probably already used this.\r\nn : new game.\r\nh : hit.\r\ns : stand.\r\nc : shows informationabout your cards";
 string sp="snd"; //the sound path
