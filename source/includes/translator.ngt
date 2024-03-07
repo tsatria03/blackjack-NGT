@@ -18,14 +18,17 @@ void refresh(string l, string folder="", string ex="")
 if(folder=="") folder=this.lfolder;
 if(ex=="") ex=this.lex;
 if(l=="") return;
-if(l=="english" || l=="eng") return;
 if(this.lfolder!=folder) this.lfolder=folder;
 if(this.lex!=ex) this.lex=ex;
+this.langdata="";
+if(l!="english" && l!="eng")
+{
 file f;
 f.open(this.lfolder+"/"+l+""+this.lex+"","r");
 string ldd=f.read(f.get_size());
 f.close();
 this.langdata=ldd;
+}
 this.langname=l;
 }
 string translate(string l, string text, string firstr="", string secondr="")

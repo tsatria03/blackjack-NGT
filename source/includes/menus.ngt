@@ -25,6 +25,7 @@ break;
 }
 else if(r=="lang")
 {
+c.reset();
 asklang(true);
 break;
 }

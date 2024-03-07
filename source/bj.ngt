@@ -138,8 +138,8 @@ string get_stand()
 if(!stand) return "";
 double a=get_dtcn(); //computer total number
 double b=get_ptcn(); //player total number
-string aw=tran(awin); //translate awin variable into aw variable.
-string bw=tran(bwin); //the computer win variable.
+string aw=awin;
+string bw=bwin;
 if(a>21 && b>21) return tran("no one wins the game!");
 else if(a==b) return tran("draw!");
 else if(a<b)

@@ -32,7 +32,7 @@ else
 play_s_wait(sp+"/push.ogg",s);
 }
 s.load(sp+"/finished.ogg");
-string mms=get_stand()+"\r\n"+tran("your total cards: %1%, making %2%.","%1% %2%",pcl.length()+"```=```"+get_ptcn())+"\r\n"+tran("computer's total cards: %1%, making %2%.","%1% %2%",dcl.length()+"```=```"+get_dtcn());
+string mms=tran(get_stand())+"\r\n"+tran("your total cards: %1%, making %2%.","%1% %2%",pcl.length()+"```=```"+get_ptcn())+"\r\n"+tran("computer's total cards: %1%, making %2%.","%1% %2%",dcl.length()+"```=```"+get_dtcn());
 speak(tran("finished.")+" "+mms);
 s.play();
 }
