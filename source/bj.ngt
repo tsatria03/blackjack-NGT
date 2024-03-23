@@ -36,6 +36,7 @@ double dollars=2000,bet=1;
 text_input input;
 string lang="english";
 translator tr;
+savedata data("data.ini","",savedata_ini);
 int playcount=0;
 int win=0;
 int lose=0;
@@ -58,9 +59,12 @@ alert(tran("error"),tran("can't open as an instance is already running!"));
 exit();
 return;
 }
+tr.lex=".ini";
 show_game_window("blackjack version "+ver);
+loaddata();
 wait(750);
-asklang(false);
+if(!lang_exists(lang)) asklang(false);
+else mainmenu();
 }
 double get_dtcn()
 {
@@ -182,4 +186,36 @@ string tran(string text, string fir="", string sec="")
 {
 //short function for translations.
 return tr.translate(lang,text,fir,sec);
+}
+bool lang_exists(string la)
+{
+filesystem f;
+string cp=f.get_current_path();
+f.change_current_path(cp+"/"+tr.lfolder);
+string[] files=f.get_files();
+string[] l={"english"};
+if(files.length()>0)
+{
+for(uint a=0;a<files.length();a++)
+{
+if(!files[a].contains(tr.lex)) continue;
+l.insert_last(files[a].replace(tr.lex,""));
+}
+}
+for(uint i=0;i<l.length();i++)
+{
+if(la==l[i]) return true;
+}
+return false;
+}
+void loaddata()
+{
+data.load();
+lang=data.read("lang");
+}
+void save_data()
+{
+data.d.delete_all();
+data.add("lang",lang);
+data.save();
 }

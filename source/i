@@ -6,3 +6,4 @@
 #include"includes/translator.ngt"
 #include"includes/custom_menu.ngt"
 #include"includes/menus.ngt"
+#include"includes/savedata.ngt"

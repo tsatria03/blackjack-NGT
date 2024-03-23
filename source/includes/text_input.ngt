@@ -462,12 +462,12 @@ speak(speak_word(cursor),true);
 }
 string speak_word(int p)
 {
-string word;
+string wordd;
 for(uint i=p; i<entry.length(); i++)
 {
-if(entry[i]!=" ") word+=""+entry[i];
+if(entry[i]!=" ") wordd+=""+entry[i];
 }
-return word;
+return wordd;
 }
 }
 bool control_down()

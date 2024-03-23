@@ -1,5 +1,10 @@
 void mainmenu()
 {
+if(!lang_exists(lang))
+{
+asklang(false);
+return;
+}
 custom_menu c;
 c.add(tran("play game"),"play");
 c.add(tran("change language, currently %1%","%1%",lang+" ("+tr.get_flag(lang)+")"),"lang");
@@ -49,6 +54,7 @@ if(files.length()>0)
 {
 for(uint a=0;a<files.length();a++)
 {
+if(!files[a].contains(tr.lex)) continue;
 l.insert_last(files[a].replace(tr.lex,""));
 }
 }
@@ -71,6 +77,7 @@ lang=m.get_click();
 tr.refresh(lang);
 string lflag=tr.get_flag(lang);
 speak(tran("language changed to %1% (%2%)","%1% %2%",lang+"```=```"+lflag));
+save_data();
 break;
 }
 }//while
