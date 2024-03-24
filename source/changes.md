@@ -4,7 +4,6 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 
 ## new in version 1.0.6:
 * game language can now be saved. `data.ini` is the file.
-* languages changed to ini extention.
 * added new language strings.
 * added an option into the main menu to change to a new language.
 * updated burmese localization.

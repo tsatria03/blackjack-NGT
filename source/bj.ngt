@@ -59,7 +59,6 @@ alert(tran("error"),tran("can't open as an instance is already running!"));
 exit();
 return;
 }
-tr.lex=".ini";
 show_game_window("blackjack version "+ver);
 loaddata();
 wait(750);
