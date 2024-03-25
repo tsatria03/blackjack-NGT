@@ -3,5 +3,6 @@
 *.md linguist-detectable
 *.lng linguist-detectable linguist-language=INI
 *.ngt linguist-language=angelScript
-*.html linguist-detectable linguist-language=HTML
+*.html linguist-detectable
 *.txt linguist-detectable linguist-language=Text
+*.dll linguist-detectable
