@@ -163,18 +163,20 @@ key_hold ckpagedown(SDLK_PAGEDOWN,300,50);
 key_hold ckpageup(SDLK_PAGEUP,300,60);
 private menu_item@[]items(0);
 private double line=-1;
-private bool running=false;
+private bool m_running=false;
 private int cm_error=cme_none;
 private string title;
 private bool tell=true;
 string clicked = "";
 private string char,multichar,test;
 private sound sndclick, sndedge, sndwrap, sndopen, sndmove;
+private sound musical;
+double musicvol=0, musicpitch=100;
 custom_menu()
 {
 this.clicked = "";
 this.cm_error=cme_none;
-this.running=false;
+this.m_running=false;
 this.reset(true);
 }
 void reset(bool completely=false)
@@ -184,7 +186,7 @@ this.items.resize(0);
 this.clicked = "";
 if(completely)
 {
-running=false;
+m_running=false;
 this.wrap=false;
 this.sidescrolling=false;
 this.allowenter=true;this.allownumpadenter=true;this.allowrightenter=true;
@@ -195,12 +197,19 @@ this.sndmove.close();
 this.sndedge.close();
 this.sndwrap.close();
 this.sndopen.close();
+this.musical.close();
+this.musicvol=0;
+this.musicpitch=100;
 return;
 }
 }
+bool get_running() property
+{
+return this.m_running;
+}
 void create(string ctitle,bool say_dialog=false,bool allowoverrun=false)
 {
-if(this.running && !allowoverrun)
+if(this.m_running && !allowoverrun)
 {
 this.cm_error=cme_alreadyactive;
 return;
@@ -208,11 +217,29 @@ return;
 string d="";
 if(say_dialog) d="  dialog";
 this.title=ctitle;
-this.running=true;
+this.m_running=true;
 speak(this.title+d,false);
 this.clicked = "";
 this.play_opensound();
 return;
+}
+void set_music(string path) property
+{
+if(this.musical.active) this.musical.close();
+this.musical.load(path);
+this.musical.volume=this.musicvol;
+this.musical.pitch=this.musicpitch;
+this.play_music();
+}
+void play_music()
+{
+if(!this.musical.active) return;
+if(!this.musical.playing) this.musical.play_looped();
+}
+void stop_music()
+{
+this.musical.stop();
+this.musical.close();
 }
 void list_monitor(string ref)
 {
@@ -471,18 +498,29 @@ this.sndopen.play();
 }
 void monitor()
 {
-if(!this.running) return;
+if(!this.m_running)
+{
+this.stop_music();
+return;
+}
 this.clicked = "";
+if(this.musical.active)
+{
+if(this.musical.volume!=this.musicvol) this.musical.volume=this.musicvol;
+if(this.musical.pitch!=this.musicpitch) this.musical.pitch=this.musicpitch;
+}
 if(this.title==""||this.title==" ")
 {
 this.cm_error=cme_run_title_empty;
-this.running=false;
+this.m_running=false;
+this.stop_music();
 return;
 }
 if(!this.verify_item_references())
 {
 this.cm_error=cme_invalid_length;
-this.running=false;
+this.m_running=false;
+this.stop_music();
 return;
 }
 if(this.tell)
@@ -551,7 +589,7 @@ break;
 }
 if(!this.verify_item_references())
 {
-this.running=false;
+this.m_running=false;
 this.cm_error=cme_invalid_length;
 return;
 }
@@ -653,14 +691,15 @@ this.items[this.line].on_focus();
 }
 else if(this.escapeable && key_pressed(SDLK_ESCAPE))
 {
-this.running=false;
+this.m_running=false;
 this.cm_error=cme_canceled;
+this.stop_music();
 return;
 }
 }//end
-string get_current_ref()
+string get_current_ref() property
 {
-if(!this.running) return"";
+if(!this.m_running) return"";
 if(!is_over_value(items.length(),this.line))
 {
 string result=this.items[this.line].ref;
@@ -668,7 +707,7 @@ return result;
 }
 return"";
 }
-string get_click()
+string get_click() property
 {
 return this.clicked;
 }
@@ -686,13 +725,13 @@ if(f<0) return false;
 this.items[f].clickable=clickable;
 return true;
 }
-double item_length()
+double get_item_length() property
 {
 return this.items.length();
 }
 bool is_running()
 {
-return this.running;
+return this.m_running;
 }
 int[] get_list_selections(string ref)
 {
@@ -730,7 +769,7 @@ if(this.items[i].ref == ref) return i;
 }
 return -1;
 }
-double get_position()
+double get_position() property
 {
 return this.line;
 }
@@ -757,11 +796,11 @@ return false;
 this.line=f;
 return true;
 }
-int get_error()
+int get_error() property
 {
 return this.cm_error;
 }
-string get_error_info()
+string get_error_info() property
 {
 int aa=this.get_error();
 if(aa==cme_none) return"";

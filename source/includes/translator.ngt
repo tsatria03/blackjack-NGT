@@ -12,12 +12,17 @@ string lfolder="lang";
 
 //the language extention.
 string lex=".lng";
-private string langdata, langname="english";
+private string langdata, m_langname="english";
+string get_langname() property
+{
+return this.m_langname;
+}
 void refresh(string l, string folder="", string ex="")
 {
 if(folder=="") folder=this.lfolder;
 if(ex=="") ex=this.lex;
-if(l=="") return;
+if(l=="") l=this.m_langname;
+if(l=="") l="english";
 if(this.lfolder!=folder) this.lfolder=folder;
 if(this.lex!=ex) this.lex=ex;
 this.langdata="";
@@ -29,11 +34,11 @@ string ldd=f.read(f.get_size());
 f.close();
 this.langdata=ldd;
 }
-this.langname=l;
+this.m_langname=l;
 }
 string translate(string l, string text, string firstr="", string secondr="")
 {
-if(l!=this.langname) this.refresh(l);
+if(l!=this.m_langname) this.refresh(l);
 string c=this.langdata;
 if(c=="") c=text;
 string[] lines=c.split("\r\n");
@@ -56,13 +61,13 @@ if(text.contains(fir[b])) text=text.replace(fir[b],sec[b]);
 }
 return text;
 }
-string get_flag(string l="")
+string get_flag(string l)
 {
-if(l=="") l=this.langname;
+if(l=="") l=this.m_langname;
 if(l=="") return"";
 if(l=="eng"||l=="english") return"🇺🇸";
 string[] lines;
-if(this.langname!=l)
+if(this.m_langname!=l)
 {
 file f;
 f.open(this.lfolder+"/"+l+""+this.lex+"","r");
@@ -79,5 +84,9 @@ string[] d=lines[i].split(":");
 if(d[0]=="flag" && d.length()>1) return ""+d[1];
 }//i
 return"";
+}
+string get_flag() property
+{
+return this.get_flag(this.m_langname);
 }
 }//endclass

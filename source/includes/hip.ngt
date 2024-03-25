@@ -22,11 +22,23 @@ bool shift_is_down()
 {
 return key_down(SDLK_LSHIFT) || key_down(SDLK_RSHIFT);
 }
+bool get_control_down() property
+{
+return control_is_down();
+}
+bool get_shift_down() property
+{
+return shift_is_down();
+}
+bool get_alt_down() property
+{
+return alt_is_down();
+}
 double rdm(double minimum,double maximum,bool rounded=false,double number_of_rounding=0)
 {
 double final=-1;
-//if(rounded) final=round(random(minimum,maximum),number_of_rounding);
-//else 
+if(rounded) final=round(random(minimum,maximum),number_of_rounding);
+else
 final=random(minimum,maximum);
 return final;
 }
@@ -102,6 +114,20 @@ list+=arr[i]+""+each;
 }
 return list;
 }
+string convert(float[] arr,string each=", ")
+{
+string list;
+if(arr.length()==0) return "";
+if(arr.length()==1) return ""+arr[0];
+for(uint i=0; i<arr.length(); i++)
+{
+if(i==arr.length()-1)
+list+="and "+arr[i];
+else
+list+=arr[i]+""+each;
+}
+return list;
+}
 string convert(uint[] arr,string each=", ")
 {
 string list;
@@ -118,7 +144,7 @@ return list;
 }
 }//end of lister.
 
-/*string convert_size(double size)
+string convert_size(double size)
 {
 if(size<1) return"0 B";
 if (size<1024)
@@ -142,7 +168,7 @@ return round(size,2)+" GB";
 }
 size=size/1024;
 return round(size,2)+" TB";
-}*/
+}
 string convert_month_name(double value)
 {
 if(value==1) return"January";
@@ -197,10 +223,7 @@ else if(weekdayname=="Friday") return 6;
 else if(weekdayname=="Saturday") return 7;
 else return -1;
 }
-/*double stn(string stringtoconvert)
-{
-return string_to_number(stringtoconvert);
-}
+/*
 tone_synth progress_synth;
 sound@ progress_sound;
 void beep_percentage(double val)
@@ -223,7 +246,7 @@ double first=five+four+three+two+one;
 double second=(five*5)+(four*4)+(three*3)+(two*2)+(one*1);
 if(first<1) return 0.0;
 double result=second/first;
-//result=round(result,round_to);
+result=round(result,round_to);
 return result;
 }
 string get_item_text(string text,string split_with="[[]]")
@@ -249,8 +272,8 @@ double percent(double n1, double n2)
 return (n1/n2)*100;
 }
 //these are the constants for the file_put_contents function.
-uint8 FILE_WRITE=250;
-uint8 FILE_APPEND=255;
+const uint8 FILE_WRITE=250;
+const uint8 FILE_APPEND=255;
 bool file_put_contents(string filename, string contents, uint8 filemode=FILE_WRITE)
 {
 int ret;
@@ -402,7 +425,7 @@ int bool_to_int(bool b)
 {
 return b?1:0;
 }
-string ms_to_readable_time(double ms)
+string ms_to_readable_time(double ms, int round_year_to=0, int round_month_to=0, int round_week_to=0, int round_day_to=0, int round_hour_to=0, int round_minute_to=0, int round_second_to=0)
 {
 if(ms<=0) return "no time at all";
 if(ms<1000) return ms+" millisecond"+(ms>1?"s":"");
@@ -414,19 +437,19 @@ hours = floor(minutes / 60);
 minutes %= floor(60);
 days = floor(hours / 24);
 hours %= floor(24);
-days=round(days,0);
+days=round(days,round_day_to);
 weeks = floor(days / 7);
 days %= floor(7);
 months = floor(weeks / 4.35);
 weeks %= floor(4.35);
 years=floor(months/12);
 months%=floor(12);
-months=round(months,0);
-weeks=round(weeks,0);
-minutes=round(minutes,0);
-hours=round(hours,0);
-seconds=round(seconds,0);
-years=round(years,0);
+months=round(months,round_month_to);
+weeks=round(weeks,round_week_to);
+minutes=round(minutes,round_minute_to);
+hours=round(hours,round_hour_to);
+seconds=round(seconds,round_second_to);
+years=round(years,round_year_to);
 string ret;
 if(years>0)
 {

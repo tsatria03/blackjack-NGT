@@ -29,16 +29,7 @@ void load()
 file f;
 //fn is our previously declared filename string, so use that.
 f.open(fn,"r");
-//check for a decryption key.
-/*if (key=="")
-{
-//no key, so just deserialize.
-d=deserialize(f.read());
-}
-else
-{*/
 d=loaddict(f.read(f.get_size()));
-//}
 //close the file
 f.close();
 }
@@ -48,11 +39,7 @@ void save()
 file f;
 //again, use the FN string
 f.open(fn,"w");
-//check for a key.
-//if (key=="")
 f.write(savedict(d));
-/*else
-f.write(string_encrypt(serialize(d),key));*/
 }
 //function to add a value.
 void add(string name, double value)
@@ -79,17 +66,29 @@ string tmp;
 d.get(name,tmp);
 return tmp;
 }
+bool exists(string k)
+{
+return this.d.exists(k);
+}
+void clear()
+{
+this.d.delete_all();
+}
 private dictionary loaddict(string data)
 {
 //this function loads the data to the dictionary.
+if(this.key!="") data=string_decrypt(data,this.key);
 dictionary d;
 if(this.type==savedata_ini) d=this.inidict(data);
+else if(this.type==savedata_def) d=deserialize(data);
 return d;
 }
 private string savedict(dictionary@ d)
 {
 string fa;
 if(this.type==savedata_ini) fa=this.dictini(d);
+else if(this.type==savedata_def) fa=serialize(d);
+if(this.key!="") fa=string_encrypt(fa,this.key);
 return fa;
 }
 private dictionary inidict(string data)
