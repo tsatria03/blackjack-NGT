@@ -8,7 +8,6 @@ if(bet>0)
 {
 dollars+=bet;
 speak(tran("you've won %1% dollars.","%1%",""+bet));
-wait(750);
 }
 }
 else if(st=="draw!")
@@ -120,7 +119,11 @@ speak(tran(get_mode(m)));
 }
 if(key_pressed(SDLK_ESCAPE))
 {
-break;
+if(running)
+{
+speak(tran("finish the current game first"));
+}
+else break;
 }
 if(get_ptcn()>21 && !stand)
 {

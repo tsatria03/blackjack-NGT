@@ -29,7 +29,7 @@ timer at,bt; //these timers are placed in the hits to performence its usage.
 string awin="you win the game!";
 string bwin="computer wins the game!";
 sound s;
-#include"i"
+#include"i.ngt"
 lister listing;
 instance multiple("blackjackharry");
 double dollars=2000,bet=1;

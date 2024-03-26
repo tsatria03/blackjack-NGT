@@ -1,8 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-*.md linguist-detectable
-*.lng linguist-detectable linguist-language=INI
-*.ngt linguist-language=angelScript
-*.html linguist-detectable
-*.txt linguist-detectable linguist-language=Text
-*.dll linguist-detectable
+*.md linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
+*.lng linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false linguist-language=INI
+*.ngt linguist-language=angelScript linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
+*.html linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
+*.txt linguist-language=Text linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
+*.dll linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
+*.ogg linguist-detectable=true linguist-vendored=false linguist-generated=false linguist-documentation=false
