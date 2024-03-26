@@ -65,9 +65,9 @@ wait(750);
 if(!lang_exists(lang)) asklang(false);
 else mainmenu();
 }
-double get_dtcn()
+double get_dtcn() property
 {
-//this function returns the total number of all the computer cards. this is used to determine the 21.
+//this function / property returns the total number of all the computer cards. this is used to determine the 21.
 double n=0;
 for(uint i=0;i<dcl.length();i++)
 {
@@ -75,9 +75,9 @@ n+=dcl[i];
 }
 return n;
 }
-double get_ptcn()
+double get_ptcn() property
 {
-//this function returns the total number of all the player cards. this is used to determine the 21.
+//this function / property returns the total number of all the player cards. this is used to determine the 21.
 double n=0;
 for(uint i=0;i<pcl.length();i++)
 {
@@ -210,11 +210,11 @@ return false;
 void loaddata()
 {
 data.load();
-lang=data.read("lang");
+if(data.exists("lang")) lang=data.read("lang");
 }
 void save_data()
 {
-data.d.delete_all();
+data.clear();
 data.add("lang",lang);
 data.save();
 }

@@ -2,7 +2,12 @@
 
 Use heading level 2 to move between versions, heading level 3 to view changes in each version.
 
-## new in version 1.0.6:
+## new
+* readme has been changed to introduction, and it is now in md format.
+* you can no longer press escape to quit to the main menu while the game is active.
+* added 1 new translation string, and updated localizations.
+
+## new in version 1.0.6
 * game language can now be saved. `data.ini` is the file.
 * added new language strings.
 * added an option into the main menu to change to a new language.
@@ -10,7 +15,7 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * fixed translator bug which causes the changed language to fail getting data.
 * added thai, turkish, and chinese localizations.
 
-## new in version 1.0.5:
+## new in version 1.0.5
 * the game will bring you to the main menu upon pressing escape on the game area, rather than directly executing to quit.
 * added play stat into the main menu. you will see how many times you've played, the number of times you've won, draw, and lost.
 * added new translation strings. `tran.lng` file was also been updated as of it.
@@ -20,10 +25,10 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * added a sound when you get blackjack 21 when hit, thanks to **Tew Hong Jun**
 * added comments in `bj.ngt` to make less confuse with the codes.
 
-## new in version 1.0.4:
+## new in version 1.0.4
 * added translation into the game! the tran.lng has been provided in the source directory. you can copy it to the lang folder with your language name to translate, as that is just the template. enjoy. you can translate and make PR, or send through telegram. the translated text should be placed after the equal sign (=).
 
-## new in version 1.0.3:
+## new in version 1.0.3
 
 ### fixes
 * fixed the bug where dollars wouldn't be removed upon losing.
@@ -33,7 +38,7 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * updated text_input to latest, optimizing CPU and fan usage at the maximum possibility.
 * updated the build engine to version 2.09. do to this, all dll files have been updated, copied from the original engine file.
 
-## new in version 1.0.2:
+## new in version 1.0.2
 
 ### fixes
 * Fixed the bug of the f1 key saying "active one" instead of "activate one".
@@ -49,7 +54,7 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * Upon the stand, it will now speak not only finish message, but also the winning message. As such, the total cards, total numbers will also be announced upon stand.
 * You can now see your all cards information by pressing the *c* key.
 
-## new in version 1.0.1 (build 2024.01.01):
+## new in version 1.0.1 (build 2024.01.01)
 
 ### updated
 * Updated the computer sequence function to determine the hit of the card, to make it more randomized.
@@ -60,6 +65,6 @@ Use heading level 2 to move between versions, heading level 3 to view changes in
 * Fixed a bug in the installer version displaying "readme" as "breadme". Please delete the *breadme* start menu shortcut!
 * Fixed a bug that waits too longer than it should be in the stand.
 
-## new in version 1.0.0:
+## new in version 1.0.0
 
 **First release**
