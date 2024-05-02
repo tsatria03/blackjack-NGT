@@ -21,7 +21,7 @@ private string[] nochars;
 private string[] onlychars;
 private string nochardes="";
 //Constructor.
-bool canceled=false;
+private bool m_canceled=false;
 text_input()
 {
 reset();
@@ -38,7 +38,11 @@ this.pasteable=true;this.copyable=true;
 this.nochars.resize(0);
 this.onlychars.resize(0);
 this.nochardes="";
-this.canceled=false;
+this.m_canceled=false;
+}
+bool get_canceled() property
+{
+return this.m_canceled;
 }
 bool is_only_allowed_char(string char)
 {
@@ -322,7 +326,7 @@ for(uint i=0; i<entry.length(); i++) fulltext+=""+entry[i];
 if(fulltext.length()==0) continue;
 speak(fulltext,true);
 }
-if(rarrow.pressing() and cursor<entry.length())
+if(rarrow.pressing and cursor<entry.length())
 {
 if(controldown()) nextword();
 else{
@@ -331,7 +335,7 @@ speak_character_at(cursor);
 }
 }
 
-if(larrow.pressing() and cursor>0)
+if(larrow.pressing and cursor>0)
 {
 if(controldown()) prevword();
 else{ 
@@ -339,7 +343,7 @@ cursor--;
 speak_character_at(cursor);
 }
 }
-if((back.pressing() or back2.pressing()) and cursor>0)
+if((back.pressing or back2.pressing) and cursor>0)
 {
 if(controldown() and entry.length()>0)
 {
@@ -355,7 +359,7 @@ cursor--;
 }
 if(key_pressed(SDLK_ESCAPE))
 {
-this.canceled=true;
+this.m_canceled=true;
 break;
 }
 }
@@ -409,6 +413,8 @@ return;
 }
 if(cursor<=0)
 {
+cursor=0;
+speak(speak_word(cursor),true);
 return;
 }
 for(counter=cursor; counter>=0; counter--)
@@ -454,7 +460,7 @@ break;
 }
 }
 }
-if((counter<=0)||(counter>entry.length()))
+if((counter<=0)||(counter>=entry.length()))
 {
 cursor=0;
 speak(speak_word(cursor),true);
@@ -466,6 +472,7 @@ string wordd;
 for(uint i=p; i<entry.length(); i++)
 {
 if(entry[i]!=" ") wordd+=""+entry[i];
+else break;
 }
 return wordd;
 }

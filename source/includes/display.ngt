@@ -3,36 +3,36 @@ void play_stand(string st)
 if(st==awin)
 {
 win++;
-play_s_wait(sp+"/win.ogg",s);
+src::play_wait("win.ogg",s);
 if(bet>0)
 {
 dollars+=bet;
-speak(tran("you've won %1% dollars.","%1%",""+bet));
+speak(tran("You've won %1% dollars.","%1%",""+bet),false);
 }
 }
 else if(st=="draw!")
 {
 draw++;
-play_s_wait(sp+"/bust.ogg",s);
+src::play_wait("bust.ogg",s);
 }
 else if(st==bwin)
 {
 lose++;
-play_s_wait(sp+"/lose.ogg",s);
+src::play_wait("lose.ogg",s);
 if(bet>0)
 {
 dollars-=bet;
-speak(tran("you've lost %1% dollars!","%1%",""+bet));
-play_s_wait(sp+"/lost_money.ogg",s);
+speak(tran("you've lost %1% dollars!","%1%",""+bet),false);
+src::play_wait("lost_money.ogg",s);
 }
 }
 else
 {
-play_s_wait(sp+"/push.ogg",s);
+src::play_wait("push.ogg",s);
 }
-s.load(sp+"/finished.ogg");
+s.load("finished.ogg");
 string mms=tran(get_stand())+"\r\n"+tran("your total cards: %1%, making %2%.","%1% %2%",pcl.length()+"```=```"+get_ptcn())+"\r\n"+tran("computer's total cards: %1%, making %2%.","%1% %2%",dcl.length()+"```=```"+get_dtcn());
-speak(tran("finished.")+" "+mms);
+speak(tran("finished.")+" "+mms,false);
 s.play();
 }
 void display()
@@ -40,7 +40,7 @@ void display()
 refresh();
 double counter=0;
 string[] items;
-speak(tran("game started. press f1 for help."));
+speak(tran("game started. press f1 for help."),false);
 while(true)
 {
 delay(5);
@@ -168,10 +168,10 @@ changebet();
 if(get_ptcn()==21 && !stand && running)
 {
 sound bj21;
-play_s(sp+"/got21.ogg",bj21);
-speak(tran("good, you have a blackjack!"));
+src::play("got21.ogg",bj21);
+speak(tran("good, you have a blackjack!"),false);
 wait(750);
-double bt=bet;
+uint64 bt=bet;
 bet=bet+bet;
 standgame();
 bet=bt;
@@ -187,24 +187,24 @@ speak(tran("sorry, you don't have enough dollars that you are currently bet. you
 return;
 }
 refresh();
-speak(tran("new game started"));
+speak(tran("new game started"),false);
 running=true;
-play_s_wait(sp+"/shuffle.ogg",s);
-speak(tran("your cards"));
+src::play_wait("shuffle.ogg",s);
+speak(tran("your cards"),false);
 double ha=hit();
-play_s_wait(sp+"/draw.ogg",s);
-speak(""+ha);
+src::play_wait("draw.ogg",s);
+speak(""+ha,false);
 
 ha=hit();
-play_s_wait(sp+"/draw.ogg",s);
-speak(""+ha);
+src::play_wait("draw.ogg",s);
+speak(""+ha,false);
 dhit();dhit();
 }
 void hitgame()
 {
 double h=hit();
 speak(tran("hits %1%","%1%",""+h));
-play_s_wait(sp+"/draw.ogg",s);
+src::play_wait("draw.ogg",s);
 }
 void standgame()
 {
@@ -215,8 +215,8 @@ try_dhit();
 }
 stand=true;
 running=false;
-speak(tran("standed!"));
-play_s_wait(sp+"/stand.ogg",s);
+speak(tran("standed!"),false);
+src::play_wait("stand.ogg",s);
 play_stand(get_stand());
 }
 void display_your_card_information()
@@ -237,7 +237,7 @@ void changebet()
 input.reset();
 string f=input.input(tran("type the amount to bet"));
 if(f=="") return;
-double bdd=string_to_number(f);
+uint64 bdd=string_to_number(f);
 if(bdd>dollars)
 {
 speak(tran("error. you cannot bet more than what you already have, maximum of %1% dollars.","%1%",""+dollars));
@@ -245,5 +245,5 @@ return;
 }
 bet=bdd;
 speak(tran("changed bet success!"));
-play_s_wait(sp+"/bet_changed.ogg",s);
+src::play_wait("bet_changed.ogg",s);
 }

@@ -36,12 +36,13 @@ break;
 }
 else if(r=="quit")
 {
+break;
+}
+}
 speak(tran("exiting..."));
 c.reset(true);
 wait(1000);
 exit();
-}
-}
 }//end.mainmenu
 void asklang(bool escapeable=true)
 {
@@ -61,7 +62,7 @@ l.insert_last(files[a].replace(tr.lex,""));
 custom_menu m;
 for(uint i=0;i<l.length();i++)
 {
-m.add(tran(l[i]),l[i]);
+m.add(tran(l[i].capitalize())+" ("+tran(tr.get_code(l[i]))+")",l[i]);
 }
 m.escapeable=escapeable;
 m.create(tran("choose your language"));

@@ -2,13 +2,15 @@
 #include"key_hold.ngt"
 timer navtime;
 /*
-* custom menu
-by harry min khant
-*
-* this class requires the helpful includes pack of harry min khant.
-* this class requires the timer object called navtime, which was already declared in this script. If you have multiple navtime timer though, don't forget to change others to the new!
+Custom menu
+
+By Harry Min Khant
+
+This class requires the Helpful Includes pack (HIP).
+
+This class requires the timer object called navtime, which was already declared in this script. If you have multiple navtime timer though, don't forget to change others to the new!
 */
-//error codes
+//Error codes
 enum custommenuerrorcodes
 {
 cme_none=0,
@@ -21,10 +23,6 @@ cme_outrange,
 cme_invalid_length,
 cme_invalid_type
 }
-/*
-* declare the class, which will store variables, functions, and methods.
-* everything is handled by custom error rather than the default error of which the NGT provides.
-*/
 enum cmenu_types
 {
 cme_type_text = 0,
@@ -41,12 +39,12 @@ int type = -1;
 custom_menu@menu_parent;
 bool checked;
 double sd_min,sd_max,sd_index;
-listitem@[] lists;
+listitem@[] lists(0);
 int listper=-1;
 bool list_multi;
 string listtype;
 bool clickable=true;
-menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
+menu_item(string name, string ref, int type, custom_menu@ parent)
 {
 this.name = name;
 this.ref = ref;
@@ -65,7 +63,7 @@ this.menu_parent.play_clicksound();
 }
 class slider_menu_item: menu_item
 {
-slider_menu_item(const string&in name, const string&in ref, double indexval, double min, double max, custom_menu@parent)
+slider_menu_item(string name, string ref, double indexval, double min, double max, custom_menu@parent)
 {
 super(name, ref, cme_type_slider, parent);
 this.sd_min=min;
@@ -80,7 +78,7 @@ this.menu_parent.play_movesound();
 }
 class checkbox_menu_item: menu_item
 {
-checkbox_menu_item(const string&in name, const string&in ref, bool checked, custom_menu@parent)
+checkbox_menu_item(string name, string ref, bool checked, custom_menu@parent)
 {
 super(name, ref, cme_type_checkbox, parent);
 this.checked = checked;
@@ -93,7 +91,7 @@ this.menu_parent.play_movesound();
 }
 class list_menu_item: menu_item
 {
-list_menu_item(const string&in name, const string&in ref, bool mulsel, string ltype, custom_menu@parent)
+list_menu_item(string name, string ref, bool mulsel, string ltype, custom_menu@parent)
 {
 super(name, ref, cme_type_list, parent);
 this.list_multi = mulsel;
@@ -127,7 +125,7 @@ this.menu_parent.list_monitor(this.ref);
 }
 class text_menu_item: menu_item
 {
-text_menu_item(const string&in name, const string&in ref, custom_menu@parent)
+text_menu_item(string name, string ref, custom_menu@parent)
 {
 super(name, ref, cme_type_text, parent);
 }
@@ -148,13 +146,19 @@ this.selected=false;
 this.ref=this.item;
 }
 }
+/*
+Declare the class, which will store variables, functions, and methods.
+
+Everything is handled by custom error rather than the default error of which the NGT provides.
+*/
 class custom_menu
 {
 bool wrap=false, sidescrolling=false;
 bool allowenter=true,allownumpadenter=true,allowrightenter=true;
 bool escapeable=true;
 string clicksound, edgesound, wrapsound, opensound, movesound;
-//private variables and therefore they should not be modified.
+int ttkey=SDLK_TAB; //The key for repeating title, default is tab key, set to -1 on no key.
+//Private variables and therefore they should not be modified.
 key_hold ckeyup(SDLK_UP,300,50);
 key_hold ckeydown(SDLK_DOWN,300,60);
 key_hold ckeyleft(SDLK_LEFT,300,50);
@@ -254,7 +258,7 @@ delay(5);
 update_game_window();
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
-string c=get_input().capitalize();
+string c=get_input().lower();
 if(c!="" and multichar!=c)
 {
 navtime.restart();
@@ -262,17 +266,17 @@ multichar+=c;
 }
 if(multichar!="" and c!="")
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 bool found=false;
 for (uint i=cc; i<items[f].lists.length(); i++)
 {
 if(is_over_value(items[f].lists.length(),i)) continue;
 if(i==cc) continue;
 test=this.items[f].lists[i].item;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(this.items[f].lists[cc].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -293,14 +297,14 @@ break;
 }
 if (found==false)
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 for (uint i=0; i<items[f].lists.length(); i++)
 {
 test=this.items[f].lists[i].item;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(!is_over_value(this.items[f].lists.length(),cc) && this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(!is_over_value(this.items[f].lists.length(),cc) && this.items[f].lists[cc].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -384,6 +388,11 @@ bool add_list_item_to(string ref,string item, string list_ref="", int per=-1, bo
 this.cm_error=cme_none;
 int f=this.get_menu_item(ref);
 if(f<0) return false;
+if(this.items[f].type!=cme_type_list)
+{
+this.cm_error=cme_invalid_type;
+return false;
+}
 if(list_ref=="") list_ref=item;
 listitem l;
 l.item=item;
@@ -398,7 +407,11 @@ bool remove_list_item_from(string ref, int per)
 this.cm_error=cme_none;
 int f=this.get_menu_item(ref);
 if(f<0) return false;
-if(this.items[f].type!=cme_type_list) return false;
+if(this.items[f].type!=cme_type_list)
+{
+this.cm_error=cme_invalid_type;
+return false;
+}
 if(is_over_value(this.items[f].lists.length(),per)) return false;
 @this.items[f].lists[per]=null;
 this.items[f].lists.remove_at(per);
@@ -423,7 +436,7 @@ bool verify_item_references()
 {
 return this.items.length()>0;
 }
-bool is_clicked(const string&in ref)
+bool is_clicked(string ref)
 {
 if(ref == "") return false;
 int f = this.get_menu_item(ref);
@@ -530,7 +543,7 @@ this.tell=false;
 }
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
-string c=get_input().capitalize();
+string c=get_input().lower();
 if(c!="" and multichar!=c)
 {
 navtime.restart();
@@ -538,17 +551,17 @@ multichar+=c;
 }
 if(multichar!="" and c!="")
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 bool found=false;
 for (uint i=this.line; i<items.length(); i++)
 {
 if(is_over_value(items.length(),i)) continue;
 if(i==this.line) continue;
 test=this.items[i].name;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(this.items[this.line].name.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(this.items[this.line].name.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -564,14 +577,14 @@ break;
 }
 if (found==false)
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 for (uint i=0; i<items.length(); i++)
 {
 test=this.items[i].name;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(!is_over_value(this.items.length(),this.line) && this.items[this.line].name.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(!is_over_value(this.items.length(),this.line) && this.items[this.line].name.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -593,20 +606,20 @@ this.m_running=false;
 this.cm_error=cme_invalid_length;
 return;
 }
-if(key_pressed(SDLK_TAB)) speak(this.title);
-if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing())
+if(this.ttkey!=-1 && key_pressed(this.ttkey)) speak(this.title);
+if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing)
 {
 this.line-=10;
 if(this.line<0) this.line=0;
 this.items[this.line].on_focus();
 }
-if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing())
+if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing)
 {
 this.line+=10;
 if(this.line>items.length()-1) this.line=items.length()-1;
 this.items[this.line].on_focus();
 }
-if((!this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing ) or (this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing))
 {
 if(this.line<0) this.line=this.items.length()-1;
 else if(this.line<=0)
@@ -624,7 +637,7 @@ this.play_edgesound();
 else if(this.line>0) this.line--;
 if(!is_over_value(items.length(),this.line)) this.items[this.line].on_focus();
 }
-if((!this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing ) or (this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing))
 {
 if(this.line>=items.length()-1)
 {
@@ -648,7 +661,7 @@ speak((this.items[this.line].checked?"checked":"not checked"));
 }
 else if(!is_over_value(this.items.length(), this.line) && this.items[this.line].type == cme_type_slider)
 {
-if((!this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing ) or (this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing))
 {
 if(control_is_down())
 {
@@ -661,7 +674,7 @@ this.items[this.line].sd_index--;
 if(this.items[this.line].sd_index<this.items[this.line].sd_min) this.items[this.line].sd_index=this.items[this.line].sd_min;
 speak(""+this.items[this.line].sd_index);
 }
-if((!this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing ) or (this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing))
 {
 if(control_is_down())
 {
@@ -761,7 +774,7 @@ if(this.items[f].type!=cme_type_list) return "";
 if(is_over_value(this.items[f].lists.length(), per)) return"";
 return this.items[f].lists[per].item;
 }
-int get_menu_item(const string&in ref)
+int get_menu_item(string ref)
 {
 for(uint i=0;i<this.items.length();i+=1)
 {

@@ -1,23 +1,23 @@
-# blackjack
+# Blackjack
 
-this is an example game made with NGT language.
+This is an example game made with NGT scripting language.
 
-you can contribute by forking
+You can contribute by forking
 
-you can contribute either the code or the translation, or both.
+You can contribute either the code or the translation, or both.
 
-## contributing
+## Contributing
 
-1. fork this repository.
+1. Fork this repository.
 
-2. clone your forked repository,
+2. Clone your forked repository,
 ```
 https://github.com/<your_username>/blackjack-NGT.git
 ```
-replace <your_username> with your github username.
+Replace <your_username> with your github username.
 
-3. make changes in your forked repository.
+3. Make changes in your forked repository.
 
-4. make a poll request.
+4. Make a poll request.
 
-that's it!
+That's it!

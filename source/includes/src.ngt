@@ -1,4 +1,6 @@
-void play_s_wait(string filename,sound@ f=s, double vol=0, double pitch=100, double pan=0)
+namespace src
+{
+void play_wait(string filename,sound@ f=s, double vol=0, double pitch=100, double pan=0)
 {
 if(f.active) f.close();
 f.load(filename);
@@ -14,7 +16,7 @@ update_game_window();
 }
 f.close();
 }
-void play_s(string filename,sound@ f=s, double vol=0, double pitch=100, double pan=0)
+void play(string filename,sound@ f=s, double vol=0, double pitch=100, double pan=0)
 {
 if(f.active) f.close();
 f.load(filename);
@@ -23,4 +25,5 @@ f.volume=vol;
 f.pitch=pitch;
 f.pan=pan;
 f.play();
+}
 }
